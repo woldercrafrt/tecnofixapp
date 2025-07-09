@@ -1,0 +1,498 @@
+:root {
+    --primary-blue: #0053A6;
+    --secondary-blue: #0078d4;
+    --light-blue: #E6F3FF;
+    --hover-blue: #003d7a;
+    --text-dark: #333333;
+    --text-light: #666666;
+    --white: #ffffff;
+    --gray-light: #f5f5f5;
+    --gray-border: #e0e0e0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Proxima Nova', -apple-system, 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+}
+
+body {
+    background-color: var(--gray-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--primary-blue);
+    padding: 16px 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+    height: auto;
+}
+
+.navbar {
+    background-color: var(--primary-blue);
+    padding: 0.5rem 1rem;
+}
+
+.navbar-brand {
+    color: var(--white);
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--secondary-blue);
+    border: none;
+    padding: 12px 24px;
+    border-radius: 4px;
+    color: var(--white);
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--hover-blue);
+}
+
+/* Card Styles */
+.card {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.card-body {
+
+}
+
+.feature {
+    padding: 20px;
+    margin: 15px 0;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.feature:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Form Styles */
+.form-control {
+    border: 1px solid var(--gray-border);
+    border-radius: 6px;
+    padding: 12px;
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-blue);
+    box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.2);
+    outline: none;
+}
+
+/* Table Styles */
+.table-transparent {
+    background-color: var(--white);
+    border-radius: 8px;
+    border: 1px solid var(--gray-border);
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.table-transparent th {
+    background-color: var(--light-blue);
+    color: var(--text-dark);
+    font-weight: 600;
+    padding: 12px;
+    text-align: left;
+}
+
+.table-transparent td {
+    padding: 12px;
+    border-top: 1px solid var(--gray-border);
+    vertical-align: middle;
+}
+
+/* Hero Section */
+.hero {
+    background-color: var(--light-blue);
+    padding: 80px 0;
+    text-align: center;
+    margin-top: 60px;
+}
+
+.hero h1 {
+    color: var(--text-dark);
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    text-align: center;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+/* Navigation Links */
+.nav-link {
+    color: var(--white);
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--light-blue);
+}
+
+/* Card Grid */
+.card-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px; 
+ 
+}
+
+/* Search Bar */
+.search-bar {
+    background-color: var(--white);
+    border-radius: 24px;
+    padding: 8px 16px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    border: 2px solid var(--gray-border);
+}
+
+.search-bar:focus {
+    border-color: var(--secondary-blue);
+    outline: none;
+}
+
+/* Badges and Status */
+.badge {
+    background-color: var(--light-blue);
+    color: var(--primary-blue);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero {
+        padding: 40px 0;
+    }
+    
+    .card-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .feature {
+        margin: 10px;
+    }
+}
+
+/* Estilos para mensajes de alerta del sistema de tokens */
+#message-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    max-width: 400px;
+}
+
+#message-container .alert {
+    margin-bottom: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 8px;
+    animation: slideInRight 0.3s ease-out;
+}
+
+#message-container .alert-warning {
+    background: linear-gradient(135deg, #ffc107, #ffb300);
+    color: #856404;
+}
+
+#message-container .alert-info {
+    background: linear-gradient(135deg, #17a2b8, #138496);
+    color: white;
+}
+
+#message-container .alert a {
+    color: inherit;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+#message-container .alert a:hover {
+    opacity: 0.8;
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Estilos para el botón de cerrar en las alertas */
+#message-container .btn-close {
+    filter: invert(1);
+}
+
+#message-container .alert-warning .btn-close {
+    filter: none;
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    #message-container {
+        top: 10px;
+        right: 10px;
+        left: 10px;
+        max-width: none;
+    }
+    
+    #message-container .alert {
+        font-size: 14px;
+        padding: 12px 16px;
+    }
+    
+    .hero {
+        padding: 60px 0;
+    }
+    
+    .hero h1 {
+        font-size: 24px;
+    }
+    
+    .card-grid {
+        flex-direction: column;
+    }
+    
+    .feature {
+        margin: 10px 0;
+    }
+}
+
+/* Estilos específicos para formularios */
+.form-label {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 8px;
+}
+
+.form-text {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 4px;
+}
+
+.form-control {
+    border: 2px solid var(--gray-border);
+    border-radius: 8px;
+    padding: 14px 16px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-blue);
+    box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
+    transform: translateY(-1px);
+}
+
+.form-control::placeholder {
+    color: #999;
+    font-style: italic;
+}
+
+/* Estilos para textarea */
+textarea.form-control {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Estilos para botones mejorados */
+.btn-lg {
+    padding: 14px 28px;
+    font-size: 18px;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.btn-lg:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-outline-secondary {
+    border-color: var(--gray-border);
+    color: var(--text-dark);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--gray-light);
+    border-color: var(--text-light);
+    color: var(--text-dark);
+}
+
+/* Estilos para iconos en formularios */
+.form-label i {
+    width: 20px;
+    text-align: center;
+}
+
+/* Estilos para sección de información adicional */
+.info-section {
+    background: linear-gradient(135deg, var(--light-blue), #f8f9fa);
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 40px;
+}
+
+.info-section h3 {
+    color: var(--primary-blue);
+    font-weight: 700;
+}
+
+.info-section .col-md-4 {
+    transition: transform 0.3s ease;
+}
+
+.info-section .col-md-4:hover {
+    transform: translateY(-5px);
+}
+
+/* Estilos para hero section mejorado */
+.hero {
+    background: linear-gradient(135deg, var(--light-blue), #e3f2fd);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="%23ffffff" opacity="0.1"/><circle cx="10" cy="60" r="0.5" fill="%23ffffff" opacity="0.1"/><circle cx="90" cy="40" r="0.5" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    pointer-events: none;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+}
+
+.hero h1 {
+    font-weight: 700;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.hero .lead {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--text-light);
+}
+
+/* Animaciones para elementos del formulario */
+.feature {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Estilos para validación de formularios */
+.form-control.is-valid {
+    border-color: #28a745;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.form-control.is-invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+.invalid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
+
+.valid-feedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 80%;
+    color: #28a745;
+}
+.nav-tabs .nav-link {
+    margin-bottom: -1px;
+    background-color: #ffffff;
+    color: #333333;
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+.nav-tabs .nav-link.active {
+    margin-bottom: -1px;
+    background-color: #0053a6;
+    color: #ffffff;
+    border: 1px solid transparent;
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+
+button.nav-link {
+    background-color: #2d2d6b;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background 0.2s, color 0.2s;
+}

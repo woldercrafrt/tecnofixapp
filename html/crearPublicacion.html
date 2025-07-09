@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Publicación - TechWorld</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-laptop-code me-2"></i>TechWorld
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Barra de búsqueda -->
+            <div class="search-container mx-auto d-none d-lg-block">
+                <input type="text" class="search-bar" placeholder="Buscar servicios, productos o locales...">
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="publicaciones.html">
+                            <i class="fas fa-store me-1"></i>Publicaciones
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mostrarLocales.html">
+                            <i class="fas fa-building me-1"></i>Locales
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="citasAgendadas.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Citas
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto" id="userNav">
+                    <!-- Aquí se agregarán los botones dinámicamente -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1><i class="fas fa-bullhorn me-3"></i>Crear Publicación</h1>
+            <p class="lead mb-4">Anuncia tus servicios y conecta con más clientes</p>
+        </div>
+    </section>
+
+    <!-- Formulario de Creación -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="feature">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-plus-circle fa-3x mb-3" style="color: var(--primary-blue)"></i>
+                        <h2>Nueva Publicación</h2>
+                        <p class="text-muted">Completa los detalles de tu servicio</p>
+                    </div>
+                    
+                    <form id="crearPublicacionForm">
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label for="nombre" class="form-label">
+                                    <i class="fas fa-tag me-2"></i>Nombre del Servicio
+                                </label>
+                                <input type="text" class="form-control" id="nombre" 
+                                       placeholder="Ej: Reparación de Computadoras" required>
+                                <div class="form-text">Nombre atractivo para tu servicio</div>
+                            </div>
+                            
+                            <div class="col-md-4 mb-3">
+                                <label for="precio" class="form-label">
+                                    <i class="fas fa-dollar-sign me-2"></i>Precio
+                                </label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control" id="precio" 
+                                           placeholder="0.00" min="0" step="0.01" required>
+                                </div>
+                                <div class="form-text">Precio en dólares</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="descripcion" class="form-label">
+                                <i class="fas fa-align-left me-2"></i>Descripción del Servicio
+                            </label>
+                            <textarea class="form-control" id="descripcion" rows="4" 
+                                      placeholder="Describe detalladamente tu servicio, incluyendo qué incluye, tiempo estimado, garantía, etc..." required></textarea>
+                            <div class="form-text">Sé específico sobre lo que ofreces</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="categoria" class="form-label">
+                                    <i class="fas fa-folder me-2"></i>Categoría
+                                </label>
+                                <select class="form-control" id="categoria" required>
+                                    <option value="">Selecciona una categoría</option>
+                                    <option value="REPARACION">Reparación</option>
+                                    <option value="MANTENIMIENTO">Mantenimiento</option>
+                                    <option value="INSTALACION">Instalación</option>
+                                    <option value="CONSULTORIA">Consultoría</option>
+                                    <option value="VENTA">Venta de Equipos</option>
+                                    <option value="OTRO">Otro</option>
+                                </select>
+                                <div class="form-text">Categoría que mejor describe tu servicio</div>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Publicar Servicio
+                            </button>
+                            <a href="local.html" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Consejos para una Buena Publicación -->
+        <div class="row mt-5">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="feature">
+                    <h3 class="text-center mb-4">
+                        <i class="fas fa-lightbulb me-2" style="color: var(--primary-blue)"></i>
+                        Consejos para una Publicación Exitosa
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-3">
+                            <i class="fas fa-camera fa-2x mb-2" style="color: var(--secondary-blue)"></i>
+                            <h5>Usa Imágenes de Calidad</h5>
+                            <p class="text-muted">Las imágenes atractivas aumentan el interés de los clientes</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <i class="fas fa-pen-fancy fa-2x mb-2" style="color: var(--secondary-blue)"></i>
+                            <h5>Descripción Detallada</h5>
+                            <p class="text-muted">Explica claramente qué incluye tu servicio y sus beneficios</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <i class="fas fa-tags fa-2x mb-2" style="color: var(--secondary-blue)"></i>
+                            <h5>Precio Competitivo</h5>
+                            <p class="text-muted">Investiga el mercado y ofrece un precio justo</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Sobre TechWorld</h5>
+                    <p>Tu plataforma de servicios tecnológicos de confianza</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="nav-link">Términos y Condiciones</a></li>
+                        <li><a href="#" class="nav-link">Política de Privacidad</a></li>
+                        <li><a href="#" class="nav-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="social-links">
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="nav-link d-inline-block"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="../js/apiConfig.js"></script>
+    <script src="../js/crearPublicacion.js"></script>
+    <script src="../js/navbar.js"></script>
+</body>
+</html>

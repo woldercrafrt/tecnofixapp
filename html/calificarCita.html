@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Calificar Servicio</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <h2>Califica tu experiencia</h2>
+    <form id="calificacionForm">
+        <label for="puntuacion">Puntuación:</label>
+        <select id="puntuacion" name="puntuacion" required>
+            <option value="">Selecciona</option>
+            <option value="1">1 estrella</option>
+            <option value="2">2 estrellas</option>
+            <option value="3">3 estrellas</option>
+            <option value="4">4 estrellas</option>
+            <option value="5">5 estrellas</option>
+        </select>
+        <br>
+        <label for="comentario">Comentario:</label>
+        <textarea id="comentario" name="comentario" rows="4"></textarea>
+        <br>
+        <button type="submit">Enviar Calificación</button>
+    </form>
+    <div id="mensaje"></div>
+    <script src="../js/calificarCita.js"></script>
+</body>
+</html> 

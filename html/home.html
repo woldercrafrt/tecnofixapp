@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnofix - Tu Marketplace de Servicios Tecnológicos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-laptop-code me-2"></i>Tecnofix
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Barra de búsqueda -->
+            <div class="search-container mx-auto d-none d-lg-block">
+                <input type="text" class="search-bar" placeholder="Buscar servicios, productos o locales...">
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="home.html">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="publicaciones.html">
+                            <i class="fas fa-store me-1"></i>Publicaciones
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mostrarLocales.html">
+                            <i class="fas fa-building me-1"></i>Locales
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="citasAgendadas.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Citas
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto" id="userNav">
+                    <!-- Aquí se agregarán los botones dinámicamente -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Bienvenido a Tecnofix</h1>
+            <p class="lead mb-4">Tu marketplace de servicios tecnológicos de confianza</p>
+            <div class="search-container d-lg-none mb-4">
+                <input type="text" class="search-bar" placeholder="Buscar servicios, productos o locales...">
+            </div>
+        </div>
+    </section>
+
+    <!-- Categorías Principales -->
+    <div class="container mt-5">
+        <h2 class="mb-4">Categorías Destacadas</h2>
+        <div class="card-grid">
+            <div class="feature">
+                <i class="fas fa-tools fa-2x mb-3" style="color: var(--primary-blue)"></i>
+                <h3>Reparación</h3>
+                <p>Servicios de reparación para tus dispositivos</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-laptop fa-2x mb-3" style="color: var(--primary-blue)"></i>
+                <h3>Mantenimiento</h3>
+                <p>Mantenimiento preventivo y correctivo</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-mobile-alt fa-2x mb-3" style="color: var(--primary-blue)"></i>
+                <h3>Smartphones</h3>
+                <p>Servicios especializados para celulares</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-network-wired fa-2x mb-3" style="color: var(--primary-blue)"></i>
+                <h3>Redes</h3>
+                <p>Instalación y configuración de redes</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Servicios Destacados -->
+    <div class="container mt-5">
+        <h2 class="mb-4">Servicios Destacados</h2>
+        <div id="serviciosDestacados" class="card-grid">
+            <!-- Aquí se cargarán dinámicamente los servicios destacados -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Sobre Tecnofix</h5>
+                    <p>Tu plataforma de servicios tecnológicos de confianza</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="nav-link">Términos y Condiciones</a></li>
+                        <li><a href="#" class="nav-link">Política de Privacidad</a></li>
+                        <li><a href="#" class="nav-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="social-links">
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="nav-link d-inline-block"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/navbar.js"></script>
+</body>
+</html>

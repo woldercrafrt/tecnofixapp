@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Autenticación - TechWorld</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="feature">
+                    <h2 class="text-center mb-4">
+                        <i class="fas fa-bug me-2" style="color: var(--primary-blue)"></i>
+                        Test de Autenticación
+                    </h2>
+                    
+                    <div id="authStatus" class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        Verificando estado de autenticación...
+                    </div>
+                    
+                    <div id="userInfo" class="mt-4" style="display: none;">
+                        <h4>Información del Usuario:</h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <tbody id="userTable">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div id="localStorageInfo" class="mt-4">
+                        <h4>LocalStorage:</h4>
+                        <div class="table-responsive">
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Clave</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="localStorageTable">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-4">
+                        <a href="login.html" class="btn btn-primary me-2">
+                            <i class="fas fa-sign-in-alt me-2"></i>Ir al Login
+                        </a>
+                        <a href="usuario.html" class="btn btn-success me-2">
+                            <i class="fas fa-user me-2"></i>Ir a Usuario
+                        </a>
+                        <button id="clearStorage" class="btn btn-warning">
+                            <i class="fas fa-trash me-2"></i>Limpiar Storage
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/apiConfig.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            showLocalStorageInfo();
+            
+            // Botón para limpiar localStorage
+            document.getElementById('clearStorage').addEventListener('click', function() {
+                if (confirm('¿Estás seguro de que quieres limpiar todo el localStorage?')) {
+                    localStorage.clear();
+                    alert('LocalStorage limpiado. Recargando página...');
+                    location.reload();
+                }
+            });
+        });
+
+        function checkAuthStatus() {
+            const statusDiv = document.getElementById('authStatus');
+            const userInfoDiv = document.getElementById('userInfo');
+            const userTable = document.getElementById('userTable');
+            
+            const token = localStorage.getItem('jwt_token');
+            const userInfo = localStorage.getItem('user_info');
+            
+            if (!token || !userInfo) {
+                statusDiv.className = 'alert alert-warning';
+                statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>No hay información de autenticación en localStorage';
+                return;
+            }
+            
+            try {
+                const user = JSON.parse(userInfo);
+                
+                statusDiv.className = 'alert alert-success';
+                statusDiv.innerHTML = '<i class="fas fa-check-circle me-2"></i>Usuario autenticado correctamente';
+                
+                // Mostrar información del usuario
+                userInfoDiv.style.display = 'block';
+                userTable.innerHTML = `
+                    <tr><td><strong>ID:</strong></td><td>${user.id || 'N/A'}</td></tr>
+                    <tr><td><strong>Nombre:</strong></td><td>${user.nombre || 'N/A'}</td></tr>
+                    <tr><td><strong>Correo:</strong></td><td>${user.correo || 'N/A'}</td></tr>
+                    <tr><td><strong>Rol:</strong></td><td>${user.rol || 'N/A'}</td></tr>
+                `;
+                
+                // Verificar token
+                try {
+                    const payload = JSON.parse(atob(token.split('.')[1]));
+                    const currentTime = Math.floor(Date.now() / 1000);
+                    const isExpired = payload.exp && payload.exp < currentTime;
+                    
+                    userTable.innerHTML += `
+                        <tr><td><strong>Token Válido:</strong></td><td>${!isExpired ? 'Sí' : 'No (Expirado)'}</td></tr>
+                        <tr><td><strong>Expira:</strong></td><td>${payload.exp ? new Date(payload.exp * 1000).toLocaleString() : 'N/A'}</td></tr>
+                    `;
+                } catch (e) {
+                    userTable.innerHTML += `
+                        <tr><td><strong>Token:</strong></td><td>Error al decodificar</td></tr>
+                    `;
+                }
+                
+            } catch (error) {
+                statusDiv.className = 'alert alert-danger';
+                statusDiv.innerHTML = '<i class="fas fa-times-circle me-2"></i>Error al parsear información del usuario: ' + error.message;
+            }
+        }
+
+        function showLocalStorageInfo() {
+            const table = document.getElementById('localStorageTable');
+            table.innerHTML = '';
+            
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                const value = localStorage.getItem(key);
+                
+                let displayValue = value;
+                if (key === 'jwt_token') {
+                    displayValue = value ? value.substring(0, 50) + '...' : 'null';
+                } else if (key === 'user_info') {
+                    try {
+                        const parsed = JSON.parse(value);
+                        displayValue = JSON.stringify(parsed, null, 2);
+                    } catch (e) {
+                        displayValue = value;
+                    }
+                }
+                
+                table.innerHTML += `
+                    <tr>
+                        <td><code>${key}</code></td>
+                        <td><pre style="max-height: 100px; overflow-y: auto;">${displayValue}</pre></td>
+                    </tr>
+                `;
+            }
+            
+            if (localStorage.length === 0) {
+                table.innerHTML = '<tr><td colspan="2" class="text-center text-muted">No hay datos en localStorage</td></tr>';
+            }
+        }
+    </script>
+</body>
+</html> 

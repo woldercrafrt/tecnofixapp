@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - TechWorld</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-blue: #0053A6;
+            --secondary-blue: #0078d4;
+            --light-blue: #E6F3FF;
+            --hover-blue: #003d7a;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --gray-border: #e0e0e0;
+            --message-sent: #0078d4;
+            --message-received: #e9ecef;
+            --shadow: 0 2px 10px rgba(0,0,0,0.1);
+            --border-radius: 10px;
+        }
+
+        body {
+            background-color: var(--gray-light);
+            font-family: 'Proxima Nova', -apple-system, 'Helvetica Neue', Helvetica, Roboto, Arial, sans-serif;
+            line-height: 1.6;
+        }
+
+        /* Navbar consistente con el proyecto */
+        .navbar {
+            background-color: var(--primary-blue);
+            padding: 0.5rem 1rem;
+        }
+
+        .navbar-brand {
+            color: var(--white);
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: var(--white);
+            padding: 8px 16px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--light-blue);
+        }
+
+        /* Hero Section consistente */
+        .hero {
+            background-color: var(--light-blue);
+            padding: 80px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .hero h1 {
+            color: var(--text-dark);
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        .hero .lead {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Contenedor principal del chat */
+        .chat-container {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin: 2rem auto;
+            max-width: 800px;
+            overflow: hidden;
+            border: 1px solid var(--gray-border);
+        }
+
+        /* Header del chat */
+        .chat-header {
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .chat-header h2 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .chat-header .back-btn {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .chat-header .back-btn:hover {
+            color: var(--light-blue);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Área de mensajes */
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            background: var(--gray-light);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: var(--primary-blue);
+            border-radius: 3px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-blue);
+        }
+
+        /* Burbujas de mensaje */
+        .message {
+            display: flex;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.3s ease-out;
+        }
+
+        .message.sent {
+            justify-content: flex-end;
+        }
+
+        .message.received {
+            justify-content: flex-start;
+        }
+
+        .message-bubble {
+            max-width: 70%;
+            padding: 1rem 1.5rem;
+            border-radius: 20px;
+            position: relative;
+            word-wrap: break-word;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .message.sent .message-bubble {
+            background: var(--message-sent);
+            color: var(--white);
+            border-bottom-right-radius: 5px;
+        }
+
+        .message.received .message-bubble {
+            background: var(--message-received);
+            color: var(--text-dark);
+            border-bottom-left-radius: 5px;
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            opacity: 0.7;
+            margin-top: 0.5rem;
+            text-align: right;
+        }
+
+        .message.received .message-time {
+            text-align: left;
+        }
+
+        /* Estado vacío */
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: var(--text-light);
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: var(--primary-blue);
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        /* Formulario de envío */
+        .chat-input {
+            background: var(--white);
+            padding: 1.5rem;
+            border-top: 1px solid var(--gray-border);
+        }
+
+        .input-group {
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-control {
+            border: none;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            box-shadow: none;
+            border-color: var(--secondary-blue);
+        }
+
+        .btn-send {
+            background: var(--primary-blue);
+            border: none;
+            padding: 1rem 1.5rem;
+            color: var(--white);
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-send:hover {
+            background: var(--hover-blue);
+            transform: scale(1.05);
+        }
+
+        .btn-send:active {
+            transform: scale(0.95);
+        }
+
+        /* Animaciones */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Indicador de escritura */
+        .typing-indicator {
+            display: none;
+            padding: 1rem;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        .typing-indicator.show {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .chat-container {
+                margin: 1rem;
+                height: calc(100vh - 120px);
+            }
+
+            .chat-messages {
+                height: 300px;
+            }
+
+            .message-bubble {
+                max-width: 85%;
+            }
+
+            .chat-header h2 {
+                font-size: 1.2rem;
+            }
+        }
+
+        /* Estados de carga */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-light);
+        }
+
+        .loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Notificaciones */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-blue);
+            color: var(--white);
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        /* Mejoras para mensajes largos */
+        .message-bubble {
+            line-height: 1.4;
+        }
+
+        .message-bubble p {
+            margin: 0;
+        }
+
+        /* Timestamp más elegante */
+        .message-time {
+            font-family: 'Courier New', monospace;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-laptop-code me-2"></i>TechWorld
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Barra de búsqueda -->
+            <div class="search-container mx-auto d-none d-lg-block">
+                <input type="text" class="search-bar" placeholder="Buscar servicios, productos o locales...">
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="publicaciones.html">
+                            <i class="fas fa-store me-1"></i>Publicaciones
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mostrarLocales.html">
+                            <i class="fas fa-building me-1"></i>Locales
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="citasAgendadas.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Citas
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto" id="userNav">
+                    <!-- Aquí se agregarán los botones dinámicamente -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1><i class="fas fa-comments me-3"></i>Chat</h1>
+            <p class="lead mb-4">Comunícate con los locales y resuelve tus dudas</p>
+        </div>
+    </section>
+
+    <!-- Contenedor principal del chat -->
+    <div class="container">
+        <div class="chat-container">
+            <!-- Header del chat -->
+            <div class="chat-header">
+                <a href="javascript:history.back()" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h2><i class="fas fa-comments me-2"></i>Conversación</h2>
+            </div>
+
+            <!-- Área de mensajes -->
+            <div class="chat-messages" id="salasList">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin fa-2x"></i>
+                    <p>Cargando mensajes...</p>
+                </div>
+            </div>
+
+            <!-- Indicador de escritura -->
+            <div class="typing-indicator" id="typingIndicator">
+                <i class="fas fa-circle"></i>
+                <i class="fas fa-circle"></i>
+                <i class="fas fa-circle"></i>
+                <span class="ms-2">Escribiendo...</span>
+            </div>
+
+            <!-- Formulario de envío -->
+            <div class="chat-input">
+                <form id="mensajeForm">
+                    <div class="input-group">
+                        <input type="text" id="mensajeInput" class="form-control" placeholder="Escribe tu mensaje..." required>
+                        <button type="submit" class="btn btn-send">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Sobre TechWorld</h5>
+                    <p>Tu plataforma de servicios tecnológicos de confianza</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="nav-link">Términos y Condiciones</a></li>
+                        <li><a href="#" class="nav-link">Política de Privacidad</a></li>
+                        <li><a href="#" class="nav-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="social-links">
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="nav-link d-inline-block"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Notificación -->
+    <div class="notification" id="notification"></div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="../js/apiConfig.js"></script>
+    <script src="../js/chat.js"></script>
+    <script src="../js/navbar.js"></script>
+</body>
+</html>

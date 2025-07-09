@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test JWT - TechWorld</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-shield-alt me-2"></i>Test del Sistema JWT</h3>
+                    </div>
+                    <div class="card-body">
+                        <div id="status" class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Estado del sistema JWT
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Test de Autenticación</h5>
+                                <form id="testLoginForm">
+                                    <div class="mb-3">
+                                        <label for="testCorreo" class="form-label">Correo:</label>
+                                        <input type="email" class="form-control" id="testCorreo" value="test@example.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="testContrasena" class="form-label">Contraseña:</label>
+                                        <input type="password" class="form-control" id="testContrasena" value="123456">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Test Login</button>
+                                </form>
+                                
+                                <div class="mt-3">
+                                    <h6>Usuarios de Prueba:</h6>
+                                    <ul class="list-unstyled">
+                                        <li><strong>Usuario:</strong> test@example.com / 123456</li>
+                                        <li><strong>Admin:</strong> admin@example.com / admin123</li>
+                                        <li><strong>Local:</strong> local@example.com / local123</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Test de API</h5>
+                                <button id="testApiBtn" class="btn btn-success mb-2">Test API Protegida</button>
+                                <button id="testLogoutBtn" class="btn btn-danger mb-2">Test Logout</button>
+                                <button id="testRegisterBtn" class="btn btn-warning mb-2">Test Registro</button>
+                                
+                                <div class="mt-3">
+                                    <h6>Login Rápido:</h6>
+                                    <button id="loginUserBtn" class="btn btn-outline-primary btn-sm mb-1">Login Usuario</button>
+                                    <button id="loginAdminBtn" class="btn btn-outline-success btn-sm mb-1">Login Admin</button>
+                                    <button id="loginLocalBtn" class="btn btn-outline-warning btn-sm mb-1">Login Local</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="mt-4">
+                            <h5>Información del Token</h5>
+                            <pre id="tokenInfo" class="bg-light p-3 rounded"></pre>
+                        </div>
+
+                        <div class="mt-4">
+                            <h5>Respuestas de la API</h5>
+                            <pre id="apiResponse" class="bg-light p-3 rounded"></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/apiConfig.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStatus();
+            updateTokenInfo();
+
+            // Test Login
+            document.getElementById('testLoginForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const correo = document.getElementById('testCorreo').value;
+                const contrasena = document.getElementById('testContrasena').value;
+
+                logResponse('Intentando login...');
+                const result = await API_CONFIG.login(correo, contrasena);
+                logResponse('Login result:', result);
+                
+                updateStatus();
+                updateTokenInfo();
+            });
+
+            // Test API Protegida
+            document.getElementById('testApiBtn').addEventListener('click', async function() {
+                if (!API_CONFIG.isAuthenticated()) {
+                    logResponse('Error: No autenticado');
+                    return;
+                }
+
+                logResponse('Probando API protegida...');
+                try {
+                    const response = await API_CONFIG.fetchWithAuth(`${API_CONFIG.BASE_URL}/usuarios`);
+                    if (response) {
+                        const data = await response.json();
+                        logResponse('API Response:', data);
+                    }
+                } catch (error) {
+                    logResponse('Error en API:', error);
+                }
+            });
+
+            // Test Logout
+            document.getElementById('testLogoutBtn').addEventListener('click', function() {
+                logResponse('Haciendo logout...');
+                API_CONFIG.logout();
+                updateStatus();
+                updateTokenInfo();
+            });
+
+            // Test Registro
+            document.getElementById('testRegisterBtn').addEventListener('click', async function() {
+                const testUser = {
+                    nombre: 'Test User',
+                    correo: `test${Date.now()}@example.com`,
+                    contrasena: '123456',
+                    rol: 'USUARIO'
+                };
+
+                logResponse('Intentando registro...');
+                const result = await API_CONFIG.register(testUser.nombre, testUser.correo, testUser.contrasena, testUser.rol);
+                logResponse('Registro result:', result);
+            });
+
+            // Login Rápido - Usuario
+            document.getElementById('loginUserBtn').addEventListener('click', async function() {
+                logResponse('Login rápido como usuario...');
+                const result = await API_CONFIG.login('test@example.com', '123456');
+                logResponse('Login usuario result:', result);
+                updateStatus();
+                updateTokenInfo();
+            });
+
+            // Login Rápido - Admin
+            document.getElementById('loginAdminBtn').addEventListener('click', async function() {
+                logResponse('Login rápido como admin...');
+                const result = await API_CONFIG.login('admin@example.com', 'admin123');
+                logResponse('Login admin result:', result);
+                updateStatus();
+                updateTokenInfo();
+            });
+
+            // Login Rápido - Local
+            document.getElementById('loginLocalBtn').addEventListener('click', async function() {
+                logResponse('Login rápido como local...');
+                const result = await API_CONFIG.login('local@example.com', 'local123');
+                logResponse('Login local result:', result);
+                updateStatus();
+                updateTokenInfo();
+            });
+        });
+
+        function updateStatus() {
+            const status = document.getElementById('status');
+            if (API_CONFIG.isAuthenticated()) {
+                status.className = 'alert alert-success';
+                status.innerHTML = '<i class="fas fa-check-circle me-2"></i>Usuario autenticado';
+            } else {
+                status.className = 'alert alert-warning';
+                status.innerHTML = '<i class="fas fa-exclamation-triangle me-2"></i>Usuario no autenticado';
+            }
+        }
+
+        function updateTokenInfo() {
+            const tokenInfo = document.getElementById('tokenInfo');
+            const token = API_CONFIG.getToken();
+            const userInfo = localStorage.getItem('user_info');
+
+            let info = 'Token: ' + (token ? 'Presente' : 'No presente') + '\n';
+            info += 'User Info: ' + (userInfo ? 'Presente' : 'No presente') + '\n';
+            
+            if (userInfo) {
+                try {
+                    const user = JSON.parse(userInfo);
+                    info += 'Usuario: ' + user.nombre + '\n';
+                    info += 'Rol: ' + user.rol + '\n';
+                } catch (e) {
+                    info += 'Error parsing user info\n';
+                }
+            }
+
+            tokenInfo.textContent = info;
+        }
+
+        function logResponse(message, data = null) {
+            const responseDiv = document.getElementById('apiResponse');
+            const timestamp = new Date().toLocaleTimeString();
+            let log = `[${timestamp}] ${message}\n`;
+            
+            if (data) {
+                log += JSON.stringify(data, null, 2) + '\n';
+            }
+            
+            log += '---\n' + responseDiv.textContent;
+            responseDiv.textContent = log;
+        }
+    </script>
+</body>
+</html> 

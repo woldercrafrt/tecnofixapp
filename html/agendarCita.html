@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar Cita - TechWorld</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .hero {
+            background: linear-gradient(135deg, #0d6efd 0%, #0099ff 100%);
+            color: white;
+            padding: 40px 0;
+            margin-bottom: 40px;
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            padding: 30px;
+            margin-bottom: 40px;
+        }
+
+        .form-floating {
+            margin-bottom: 20px;
+        }
+
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+
+        .btn-agendar {
+            padding: 12px 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-agendar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+        }
+
+        .icon-feature {
+            width: 50px;
+            height: 50px;
+            background: #e7f1ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .feature-card {
+            padding: 20px;
+            border-radius: 12px;
+            background: #f8f9fa;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        #horasDisponibles {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .hora-btn {
+            padding: 10px;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            background: white;
+            transition: all 0.2s ease;
+        }
+
+        .hora-btn:hover {
+            border-color: #0d6efd;
+            background: #e7f1ff;
+        }
+
+        .hora-btn.selected {
+            background: #0d6efd;
+            color: white;
+            border-color: #0d6efd;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-laptop-code me-2"></i>TechWorld
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="publicaciones.html">
+                            <i class="fas fa-store me-1"></i>Publicaciones
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mostrarLocales.html">
+                            <i class="fas fa-building me-1"></i>Locales
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="citasAgendadas.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Citas
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto" id="userNav">
+                    <!-- Aquí se agregarán los botones dinámicamente -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1><i class="fas fa-calendar-plus me-2"></i>Agendar Cita</h1>
+            <p class="lead">Programa tu servicio técnico en el horario que más te convenga</p>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <h5>Local: <span id="nombreLocal">Cargando...</span></h5>
+                    <p><i class="fas fa-map-marker-alt me-2"></i><span id="direccionLocal">Cargando...</span></p>
+                </div>
+                <div class="col-md-6">
+                    <h5>Servicio: <span id="nombreServicio">Selecciona un servicio</span></h5>
+                    <p>Precio: <span id="precioServicio"></span></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <!-- Formulario de Cita -->
+                <div class="form-container">
+                    <h3 class="mb-4">Detalles de la Cita</h3>
+                    <form id="agendarCitaForm">
+                        <div class="mb-3">
+                            <label for="servicioSelect" class="form-label">Seleccionar Servicio</label>
+                            <select class="form-select" id="servicioSelect">
+                                <option value="" disabled selected>Cargando servicios...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-floating mb-3">
+                            <input type="date" class="form-control" id="fecha" name="fecha" required>
+                            <label for="fecha">Fecha de la cita</label>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <input type="time" class="form-control" id="hora" name="hora" required>
+                            <label for="hora">Hora de la cita</label>
+                        </div>
+
+                        <!-- Horas Disponibles (mantengo el div si se va a rellenar dinámicamente o con botones de horas)
+                             Si se usará el input type="time", este div podría ser opcional o para información extra -->
+                        <div class="mb-4">
+                            
+                            <div id="horasDisponibles" class="mt-2">
+                                <!-- Las horas se cargarán dinámicamente si se implementa -->
+                            </div>
+                        </div>
+
+                        <div class="form-floating mb-4">
+                            <textarea class="form-control" id="notas" style="height: 100px"></textarea>
+                            <label for="notas">Notas adicionales (opcional)</label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-lg btn-agendar w-100">
+                            <i class="fas fa-calendar-check me-2"></i>Confirmar Cita
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <!-- Información Adicional -->
+                <div class="feature-card">
+                    <div class="icon-feature">
+                        <i class="fas fa-info-circle text-primary fa-lg"></i>
+                    </div>
+                    <h4>Información Importante</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Horario de atención: 8:00 AM - 6:00 PM</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Tiempo estimado por servicio: 1 hora</li>
+                        <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Confirmaremos tu cita por correo</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="icon-feature">
+                        <i class="fas fa-exclamation-triangle text-warning fa-lg"></i>
+                    </div>
+                    <h4>Recuerda</h4>
+                    <p class="text-muted">Si necesitas cancelar o reprogramar tu cita, hazlo con al menos 24 horas de anticipación.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Sobre TechWorld</h5>
+                    <p>Tu plataforma de servicios tecnológicos de confianza</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="nav-link">Términos y Condiciones</a></li>
+                        <li><a href="#" class="nav-link">Política de Privacidad</a></li>
+                        <li><a href="#" class="nav-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="social-links">
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="nav-link d-inline-block"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../js/apiConfig.js"></script>
+    <script src="../js/agendarCita.js"></script>
+    <script src="../js/navbar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

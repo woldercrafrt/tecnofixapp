@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Locales - Tecnofix</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .publicacion-card { /* Mantengo la clase para reutilizar estilos de style.css si son aplicables */
+            transition: transform 0.2s;
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .publicacion-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-laptop-code me-2"></i>Tecnofix
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Barra de búsqueda -->
+            <div class="search-container mx-auto d-none d-lg-block">
+                <input type="text" class="search-bar" placeholder="Buscar locales...">
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="publicaciones.html">
+                            <i class="fas fa-store me-1"></i>Publicaciones
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="localesPublicaciones.html">
+                            <i class="fas fa-building me-1"></i>Locales
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="citasAgendadas.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Citas
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto" id="userNav">
+                    <!-- Aquí se agregarán los botones dinámicamente -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section Reducido -->
+    <section class="hero" style="padding: 40px 0;">
+        <div class="container">
+            <h1>Locales</h1>
+            <p class="lead">Descubre los mejores locales tecnológicos</p>
+            <div class="search-container d-lg-none mb-4">
+                <input type="text" class="search-bar" placeholder="Buscar locales...">
+            </div>
+        </div>
+    </section>
+
+    <div class="container mt-4">
+        <!-- Filtros -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option>Todas las categorías</option>
+                    <option>Reparación de Computadoras</option>
+                    <option>Servicio Técnico Móvil</option>
+                    <option>Redes y Conectividad</option>
+                    <option>Venta de Equipos</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-control">
+                    <option>Ordenar por</option>
+                    <option>Mejor valorados</option>
+                    <option>Más recientes</option>
+                </select>
+            </div>
+            <div class="col-md-6 text-end" id="botonesLocal">
+                <!-- Los botones se agregarán dinámicamente si el usuario es un local -->
+            </div>
+        </div>
+
+        <!-- Grid de Locales -->
+        <div class="card-grid" id="localesListContent">
+            <!-- Los locales se cargarán aquí dinámicamente -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">\
+                <div class="col-md-4">
+                    <h5>Sobre Tecnofix</h5>
+                    <p>Tu plataforma de servicios tecnológicos de confianza</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="nav-link">Términos y Condiciones</a></li>
+                        <li><a href="#" class="nav-link">Política de Privacidad</a></li>
+                        <li><a href="#" class="nav-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="social-links">
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="nav-link d-inline-block"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/apiConfig.js"></script>
+    <script src="../js/localesPublicaciones.js"></script>
+    <script src="../js/navbar.js"></script>
+</body>
+</html> 

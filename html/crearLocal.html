@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Local - TechWorld</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-laptop-code me-2"></i>TechWorld
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            
+            <!-- Barra de búsqueda -->
+            <div class="search-container mx-auto d-none d-lg-block">
+                <input type="text" class="search-bar" placeholder="Buscar servicios, productos o locales...">
+            </div>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="home.html">
+                            <i class="fas fa-home me-1"></i>Inicio
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="publicaciones.html">
+                            <i class="fas fa-store me-1"></i>Publicaciones
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="mostrarLocales.html">
+                            <i class="fas fa-building me-1"></i>Locales
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="citasAgendadas.html">
+                            <i class="fas fa-calendar-alt me-1"></i>Citas
+                        </a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ms-auto" id="userNav">
+                    <!-- Aquí se agregarán los botones dinámicamente -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1><i class="fas fa-store me-3"></i>Crear Mi Local</h1>
+            <p class="lead mb-4">Configura tu local tecnológico y comienza a ofrecer servicios</p>
+        </div>
+    </section>
+
+    <!-- Formulario de Creación -->
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 col-md-10">
+                <div class="feature">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-building fa-3x mb-3" style="color: var(--primary-blue)"></i>
+                        <h2>Información del Local</h2>
+                        <p class="text-muted">Completa los datos de tu local tecnológico</p>
+                    </div>
+                    
+                    <form id="crearLocalForm">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="nombre" class="form-label">
+                                    <i class="fas fa-sign me-2"></i>Nombre del Local
+                                </label>
+                                <input type="text" class="form-control" id="nombre" 
+                                       placeholder="Ej: TechFix Solutions" required>
+                                <div class="form-text">El nombre que verán tus clientes</div>
+                            </div>
+                            
+                            <div class="col-md-6 mb-3">
+                                <label for="direccion" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2"></i>Dirección
+                                </label>
+                                <input type="text" class="form-control" id="direccion" 
+                                       placeholder="Ej: Calle Principal 123, Ciudad" required>
+                                <div class="form-text">Dirección física de tu local</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="whatsappURL" class="form-label">
+                                <i class="fab fa-whatsapp me-2"></i>URL de WhatsApp
+                            </label>
+                            <input type="url" class="form-control" id="whatsappURL" 
+                                   placeholder="https://wa.me/1234567890">
+                            <div class="form-text">Enlace directo para que los clientes te contacten por WhatsApp</div>
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-plus-circle me-2"></i>Crear Local
+                            </button>
+                            <a href="home.html" class="btn btn-outline-secondary btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Cancelar
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información Adicional -->
+        <div class="row mt-5">
+            <div class="col-lg-8 col-md-10 mx-auto">
+                <div class="feature">
+                    <h3 class="text-center mb-4">
+                        <i class="fas fa-info-circle me-2" style="color: var(--primary-blue)"></i>
+                        ¿Por qué crear un local?
+                    </h3>
+                    <div class="row">
+                        <div class="col-md-4 text-center mb-3">
+                            <i class="fas fa-users fa-2x mb-2" style="color: var(--secondary-blue)"></i>
+                            <h5>Alcanza más clientes</h5>
+                            <p class="text-muted">Conecta con clientes que buscan servicios tecnológicos</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <i class="fas fa-chart-line fa-2x mb-2" style="color: var(--secondary-blue)"></i>
+                            <h5>Gestiona tu negocio</h5>
+                            <p class="text-muted">Administra citas, servicios y comunicación con clientes</p>
+                        </div>
+                        <div class="col-md-4 text-center mb-3">
+                            <i class="fas fa-star fa-2x mb-2" style="color: var(--secondary-blue)"></i>
+                            <h5>Construye reputación</h5>
+                            <p class="text-muted">Recibe calificaciones y comentarios de tus clientes</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Sobre TechWorld</h5>
+                    <p>Tu plataforma de servicios tecnológicos de confianza</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="nav-link">Términos y Condiciones</a></li>
+                        <li><a href="#" class="nav-link">Política de Privacidad</a></li>
+                        <li><a href="#" class="nav-link">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Síguenos</h5>
+                    <div class="social-links">
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="nav-link d-inline-block me-3"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="nav-link d-inline-block"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Scripts -->
+    <script src="../js/apiConfig.js"></script>
+    <script src="../js/crearLocal.js"></script>
+    <script src="../js/navbar.js"></script>
+</body>
+</html>
